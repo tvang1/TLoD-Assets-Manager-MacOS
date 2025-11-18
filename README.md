@@ -3,6 +3,17 @@ TLoD Tool for manage game Assets (Textures, Models, Animations).
 Version: **BETA 0.2**
 
 *Changelog from TheRamenRider*
+11-18-2025
+
+There are some bash scripts for convienience.
+
+namefix.sh and installDepend.sh
+
+namefix.sh is just for convienience to fix text for the versioning.
+
+installDepend.sh is a usefull script to install dependencies for Python for TLod Assets Manager. If one pulls from my fork, please alter the script to include your version of Python and adjust your env accordingly.
+
+*Changelog from TheRamenRider*
 10-18-2025
 
 These are changes made from the TLoD Assets Manager Beta 0.2 to fit the MacOS/Linux Environment. 
