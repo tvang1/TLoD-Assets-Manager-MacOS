@@ -11,7 +11,7 @@ import os
 from PyQt6.QtWidgets import QMessageBox, QFileDialog
 
 class ConfigurationHandler:
-    def __init__(self, option_file=str) -> None:
+    def __init__(self, option_file: str) -> None:
         """
         Handle the main Configuration Options for the tool:\n
         Loads Configuration at start of the tool, write new data into it, selection of folders.
@@ -56,27 +56,27 @@ class ConfigurationHandler:
         severed_chains_folder = severed_chains_folder_complete_string[1].strip().replace('\n','').replace('/', '/')
         deploy_folder = deploy_folder_complete_string[1].strip().replace('\n','').replace('/', '/')
 
-        if (first_run_flag[1] == 'True') or (first_run_flag[1] == f''):
-            start_up_dialog = QMessageBox.information(None, f'FIRST START-UP', f'We will do a start-up configuration\nplease follow the steps', QMessageBox.StandardButton.Ok)
+        if (first_run_flag == 'True') or (first_run_flag == ''):
+            QMessageBox.information(None, 'FIRST START-UP', 'We will do a start-up configuration\nplease follow the steps', QMessageBox.StandardButton.Ok)
             self.option_dict['First_Run'] = 'False'
         
         if resolution_x.isdigit():
             self.option_dict['SizeX'] = resolution_x
         else:
-            self.option_dict['SizeX'] = 1280
-        
+            self.option_dict['SizeX'] = '1280'
+
         if resolution_y.isdigit():
             self.option_dict['SizeY'] = resolution_y
         else:
-            self.option_dict['SizeY'] = 720
+            self.option_dict['SizeY'] = '720'
         
-        if severed_chains_folder != f'None':
+        if severed_chains_folder and severed_chains_folder != 'None':
             self.option_dict['SC_Folder'] = severed_chains_folder
         else:
             severed_chains_files_path = ConfigurationHandler.select_sc_folder()
             self.option_dict['SC_Folder'] = severed_chains_files_path
             
-        if deploy_folder != f'None':
+        if deploy_folder and deploy_folder != 'None':
             self.option_dict['Deploy_Folder'] = deploy_folder
         else:
             indicate_deploy_folder = ConfigurationHandler.select_deploy_folder()
@@ -86,7 +86,7 @@ class ConfigurationHandler:
         self.option_dict = self.option_dict
 
     @staticmethod
-    def write_config_file(config_file_path=str, configuration_dict=dict) -> None:
+    def write_config_file(config_file_path: str, configuration_dict: dict) -> None:
         """
         Write into the configuration file which is read from the Option Dict\n
         :params: config_file_path [Path to Configuration File], configuration_dict [Dictionary containing the Configuration Data]\n
@@ -110,23 +110,41 @@ class ConfigurationHandler:
         try_again_select_folder() -> get_folder ; path to 'files' Folder
         """
         get_folder: str = f''
-        try_again_dialog = QMessageBox.warning(None, f'Cannot find SC FOLDER', f'Please select the path to the files/ folder inside Severed Chains Folder', QMessageBox.StandardButton.Ok)
+        try_again_dialog = QMessageBox.warning(None, f'Cannot find SC FOLDER', f'Please select the path to the \"files\" folder inside Severed Chains Folder', QMessageBox.StandardButton.Ok)
         get_folder = QFileDialog.getExistingDirectory(None, f'Please select the folder called \"files\" inside SC root folder')
         return get_folder
     
     @staticmethod
-    def check_sc_file_folder(sc_files_path=str) -> str:
+    def check_sc_file_folder(sc_files_path: str) -> str:
         """
-        Check if the Severed Chains folders is the correct one\n
-        :params: sc_files_path [Path to Severed Chains 'files' Folder]
-        check_sc_file_folder() -> String ; If correct SC Folder
+        This function will validate the selected SC folder path. It should contain
+        the folder named 'files' (non-case sensitive).
+        If not found, it prompts the user to find the folder on repeat
+        or until they cancel.
         """
-        getting_all_folders = os.walk(sc_files_path)
-        for root, dirs, files in getting_all_folders:
-            if f'files' not in root:
-                sc_folder_error = QMessageBox.information(None, f'Incorrect SC FOLDER', f'This is not the SC root folder,\nplease select the one which is inside\nSevered Chains Folder', QMessageBox.StandardButton.Ok)
+        while True:
+            if not sc_files_path:
                 sc_files_path = ConfigurationHandler.try_again_select_folder()
-        return sc_files_path
+                if not sc_files_path:
+                    return ''
+
+            sc_path = os.path.normpath(sc_files_path)
+
+            # Look for a child folder named 'files' (non-case sensitive)
+            try:
+                for selected in os.listdir(sc_path):
+                    if selected.lower() == 'files' and os.path.isdir(os.path.join(sc_path, selected)):
+                        return os.path.normpath(os.path.join(sc_path, selected))
+            except Exception:
+                # If listing fails (permissions, etc.), treat as not found
+                pass
+
+            # Not found: inform the user and retry
+            QMessageBox.information(None, 'Incorrect SC FOLDER', 'Selected folder does not contain a "files" folder.\nPlease select the parent folder that contains the "files" directory.',QMessageBox.StandardButton.Ok)
+
+            sc_files_path = ConfigurationHandler.try_again_select_folder()
+            if not sc_files_path:
+                return ''
     
     @staticmethod
     def select_sc_folder() -> str:
@@ -134,9 +152,11 @@ class ConfigurationHandler:
         select_sc_folder_dialog = QMessageBox.information(None, f'SELECT SC FILES FOLDER', f'Please select the folder called \"files\" inside SC root folder', 
                                                                             QMessageBox.StandardButton.Ok)
         sc_folder_path = QFileDialog.getExistingDirectory(None, f'SELECT SC FILES FOLDER')
-        while sc_folder_path == f'':
-            sc_folder_path = ConfigurationHandler.try_again_select_folder()
-        
+
+        # If the user cancelled the chooser, return empty so caller can decide
+        if not sc_folder_path:
+            return ''
+
         sc_folder_final_path = ConfigurationHandler.check_sc_file_folder(sc_files_path=sc_folder_path)
         return sc_folder_final_path
     
@@ -151,5 +171,6 @@ class ConfigurationHandler:
         return indicate_deploy_folder
     
     def get_sc_folder(self) -> str:
-        self.sc_folder = self.option_dict.get(f'SC_Folder')
-        
+        # Return the stored SC_Folder value as a string (fallback to empty string)
+        self.sc_folder = str(self.option_dict.get('SC_Folder', ''))
+        return self.sc_folder
