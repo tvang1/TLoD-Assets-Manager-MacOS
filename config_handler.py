@@ -115,57 +115,35 @@ class ConfigurationHandler:
         return get_folder
     
     @staticmethod
-    def check_sc_file_folder(sc_files_path: str) -> str:
-        """
-        This function will validate the selected SC folder path. It should contain
-        the folder named 'files' (non-case sensitive).
-        If not found, it prompts the user to find the folder on repeat
-        or until they cancel.
-        """
-        while True:
-            if not sc_files_path:
-                sc_files_path = ConfigurationHandler.try_again_select_folder()
-                if not sc_files_path:
-                    return ''
-
-            sc_path = os.path.normpath(sc_files_path)
-
-            # Look for a child folder named 'files' (non-case sensitive)
-            try:
-                for selected in os.listdir(sc_path):
-                    if selected.lower() == 'files' and os.path.isdir(os.path.join(sc_path, selected)):
-                        return os.path.normpath(os.path.join(sc_path, selected))
-            except Exception:
-                # If listing fails (permissions, etc.), treat as not found
-                pass
-
-            # Not found: inform the user and retry
-            QMessageBox.information(None, 'Incorrect SC FOLDER', 'Selected folder does not contain a "files" folder.\nPlease select the parent folder that contains the "files" directory.',QMessageBox.StandardButton.Ok)
-
-            sc_files_path = ConfigurationHandler.try_again_select_folder()
-            if not sc_files_path:
-                return ''
-    
-    @staticmethod
     def select_sc_folder() -> str:
-        sc_folder_final_path = ''
-        select_sc_folder_dialog = QMessageBox.information(None, f'SELECT SC FILES FOLDER', f'Please select the folder called \"files\" inside SC root folder', 
-                                                                            QMessageBox.StandardButton.Ok)
-        sc_folder_path = QFileDialog.getExistingDirectory(None, f'SELECT SC FILES FOLDER')
-
-        # If the user cancelled the chooser, return empty so caller can decide
-        if not sc_folder_path:
-            return ''
-
-        sc_folder_final_path = ConfigurationHandler.check_sc_file_folder(sc_files_path=sc_folder_path)
-        return sc_folder_final_path
+        """
+        Select Severed Chains Folder:\n
+        This function selects Severed Chains Folder while checking it's the correct folder.\n
+        Loop will not end until the correct conditions are met, a little risky since is a While True, but more elegant.        
+        """
+        final_sc_path: str = ''
+        while True:
+            QMessageBox().information(None, f'SELECT SC FILES FOLDER', f'Please select the folder called \"files\" inside SC root folder', QMessageBox.StandardButton.Ok)
+            sc_folder_path = QFileDialog.getExistingDirectory(None, f'SELECT SC FILES FOLDER')
+            sc_folder_check_1: bool = os.path.exists(f'{sc_folder_path}/SECT')
+            sc_folder_check_2: bool = os.path.exists(f'{sc_folder_path}/characters')
+            sc_folder_check_3: bool = os.path.exists(f'{sc_folder_path}/monsters')
+            if sc_folder_check_1 and sc_folder_check_2 and sc_folder_check_3:
+                final_sc_path = sc_folder_path
+                break
+        return final_sc_path
     
     @staticmethod
     def select_deploy_folder() -> str:
+        """
+        Select Deploy Folder:\n
+        Select a folder to deploy the converted files.\n
+        We strongly recommend to do not use the Severed Chains Folder. However it's possible.
+        """
         indicate_deploy_folder: str = f''
-        select_deploy_folder_dialog = QMessageBox.information(None, f'SELECT A FOLDER TO DEPLOY', 
-                                                                        f'Please, select a folder to deploy converted files.\nRecommended: Do not create inside SC FOLDER', 
-                                                                        QMessageBox.StandardButton.Ok)
+        title_wn: str = f'SELECT A FOLDER TO DEPLOY'
+        recommend: str = f'Please, select a folder to deploy converted files.\nRecommended: Do not create inside SC FOLDER'
+        QMessageBox.information(None, title_wn, recommend, QMessageBox.StandardButton.Ok)
         indicate_deploy_folder = QFileDialog.getExistingDirectory(None, f'SELECT A FOLDER TO DEPLOY FILES')
 
         return indicate_deploy_folder
