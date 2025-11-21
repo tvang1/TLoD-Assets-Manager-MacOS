@@ -125,6 +125,12 @@ class ConfigurationHandler:
         while True:
             QMessageBox().information(None, f'SELECT SC FILES FOLDER', f'Please select the folder called \"files\" inside SC root folder', QMessageBox.StandardButton.Ok)
             sc_folder_path = QFileDialog.getExistingDirectory(None, f'SELECT SC FILES FOLDER')
+
+            # If the user cancelled the dialog, return empty path
+            # Which will kill the loop & close the selection process.
+            if not sc_folder_path:
+                return ''
+
             sc_folder_check_1: bool = os.path.exists(f'{sc_folder_path}/SECT')
             sc_folder_check_2: bool = os.path.exists(f'{sc_folder_path}/characters')
             sc_folder_check_3: bool = os.path.exists(f'{sc_folder_path}/monsters')
@@ -145,6 +151,11 @@ class ConfigurationHandler:
         recommend: str = f'Please, select a folder to deploy converted files.\nRecommended: Do not create inside SC FOLDER'
         QMessageBox.information(None, title_wn, recommend, QMessageBox.StandardButton.Ok)
         indicate_deploy_folder = QFileDialog.getExistingDirectory(None, f'SELECT A FOLDER TO DEPLOY FILES')
+
+        # If the user cancelled the dialog, return empty path
+        # Which will kill the loop & close the selection process.
+        if not indicate_deploy_folder:
+                return ''
 
         return indicate_deploy_folder
     

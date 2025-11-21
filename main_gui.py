@@ -11,6 +11,7 @@ Copyright (C) 2024 DooMMetaL
 
 
 """
+
 import sys
 import os
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QDialog, QLabel, QGridLayout, QComboBox, QLineEdit, QMessageBox
@@ -135,7 +136,7 @@ class MainWindow(QMainWindow):
         self.convert_deff_button.clicked.connect(self.deff_conversion_window)
 
     def set_window_background(self):
-        self.main_background_image.setStyleSheet("QWidget#BackgroundImageMain {background-image: url(\""+ self.bg_img + "\");" + "background-repeat: no-repeat;}")
+        self.main_background_image.setStyleSheet("QWidget#BackgroundImageMain {background-image: url(\"" + self.bg_img + "\");" + "background-repeat: no-repeat;}")
     
     def configure_tool_window(self):
         # Objects creation

@@ -1,71 +1,46 @@
-# TLoD Assets Manager MacOS/Linux Version
-TLoD Tool for manage game Assets (Textures, Models, Animations).
+## TLoD Tool for manage game Assets (Textures, Models, Animations).
 Version: **BETA 0.2**
 
-*Changelog from TheRamenRider*
-11-18-2025
+**MAC OS Fork**
+Yeah you read well!... right now TheRamenRider it's doing a very good job forking and adapting TLoD Assets Converter code for MacOS and their Users!.
+Since I do not have a proper hardware to test it, was impossible to me making something at least 'good'.
+[https://github.com/tvang1/TLoD-Assets-Manager-MacOS]
+You can check it in there!
 
-There are some bash scripts for convienience.
+**Instructions for MacOS users by TheRamenRider/tvang1**
+I'm assuming one can download this repo and can extract the contents in an organized place.
+Or hopefully, one knows how to clone from a repo.
+If you have trouble doing that, please look at [ https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository ]
 
-namefix.sh and installDepend.sh
+So we have some requirements. TLoD Assets Converter relies on Python and some dependecies.
+Python can be installed a couple of ways on MacOS.
+1) Python's main page [ https://www.python.org/downloads/ ]
+2) 'Brew' [ https://brew.sh ]
 
-namefix.sh is just for convienience to fix text for the versioning.
+I personally use 'brew' as it's similar to Linux distro packages.
 
-installDepend.sh is a usefull script to install dependencies for Python for TLod Assets Manager. If one pulls from my fork, please alter the script to include your version of Python and adjust your env accordingly.
+Once you get Python installed. You'll have to use MacOS terminal and navigate to the TLoD Assets Converter folder.
 
-*Changelog from TheRamenRider*
-10-18-2025
+> cd <path to folder>
 
-These are changes made from the TLoD Assets Manager Beta 0.2 to fit the MacOS/Linux Environment. 
+As far as running the program and getting dependecies, you're in luck!
+Just run the command in terminal (assuming you're in the TLoD Assets Converter folder):
 
-1) Fixed notable f-strings mismatches. It's a logical issue mostly pertaining to nested f-strings. This was more notable for config_handlers.py and folder_handler.py
+> bash Start-TLoD.sh
 
---- From ---
-firstrun_flag = f'FIRST_RUN = {configuration_dict.get(f'First_Run')}\n'
-res_x = f'DEFAULT_RES_X = {configuration_dict.get(f'SizeX')}\n'
-res_y = f'DEFAULT_RES_Y = {configuration_dict.get(f'SizeY')}\n'
-sc_folder = f'SC_FOLDER = {configuration_dict.get(f'SC_Folder')}\n'
-deploy_folder = f'DEPLOY_FOLDER = {configuration_dict.get(f'Deploy_Folder')}'
+This sets up a python virtual environment for TLoD Assets Converter and installs the dependecies. Once that's done, you can continue to run Start-TLoD.sh or main_gui.py to use TLoD Assets Converter. As long as the .venv is present, you'll be able to run the tool.
 
---- To --
-firstrun_flag = f"FIRST_RUN = {configuration_dict.get(f'First_Run')}\n"
-res_x = f"DEFAULT_RES_X = {configuration_dict.get(f'SizeX')}\n"
-res_y = f"DEFAULT_RES_Y = {configuration_dict.get(f'SizeY')}\n"
-sc_folder = f"SC_FOLDER = {configuration_dict.get(f'SC_Folder')}\n"
-deploy_folder = f"DEPLOY_FOLDER = {configuration_dict.get(f'Deploy_Folder')}"
+---
 
-There are plans to fix this into literal strings. For now, this should help.
-
-2) Fixed file pathing for MacOS/Linux. MacOS/Linux utilizes ‘/‘ instead of ‘\’. Most of the .py escaped and utlized '\\'. I replaced the '\\' with '/' throughout .py files.
-
---- From ---
-absolute_path_config = f'{absolute_path_current}\\Resources\\Manager.config'
-absolute_path_databases = f'{absolute_path_current}\\Databases'
-background_image = f'{absolute_path_current}\\Resources\\main.png'.replace('\\', '/')
-icon_app = f'{absolute_path_current}\\Resources\\Dragoon_Eyes.ico'
-
---- To ---
-absolute_path_config = f'{absolute_path_current}/Resources/Manager.config'
-absolute_path_databases = f'{absolute_path_current}/Databases'
-background_image = f'{absolute_path_current}/Resources/main.png'.replace('/', '/')
-icon_app = f'{absolute_path_current}/Resources/Dragoon_Eyes.ico'
-
-
-3) Ran into a bug and logical issues with submap texture exporting. When using submap converstions, the textures seemed to not want to be exported. DooMMetal identified the bug. Values in submap_conversion_window.py needed to be set to True. Such as { self.texture_convert = True } and { self.check_texture.setChecked(True) }
-
-I'd like to thank DooMMEtal and Monoxide for assisting with this version.
-
-
------
-*About the tool:*
+## About the tool:
 
 Surely you are familiar to TLoD TMD Converter (tool for converting Models from TLoD) and TLoD Texture Converter (tool for converting Textures), now i merged the best of the two worlds in a single tool. TLoD Assets Manager. 
 
 A tool designed to efficiently work with TLoD Models, Textures and in a future Sounds/Audio files.
 
-At this very moment BETA Version 0.1, the idea about this tool is not only converting models/animations/textures, but also in a future help to modding community to easily grouping and sorting their installed Visual and Audio mods!. For BETA 0.2, Preview of Models/Animations and Textures in real time.
+At this very moment BETA Version 0.2, the idea about this tool is not only converting models/animations/textures, but also in a future help to modding community to easily grouping and sorting their installed Visual and Audio mods!. For BETA 0.5 (yeah I re-formulate this, sorry but I was very positive in reaching this goal way before), Preview of Models/Animations and Textures in real time.
 
-Since this tool realies heavily in [Severed Chains](https://github.com/Legend-of-Dragoon-Modding/Severed-Chains), i strongly recommend install it and run it (at least once) to get files properly deployed.
+Since this tool relies heavily in [Severed Chains](https://github.com/Legend-of-Dragoon-Modding/Severed-Chains), strongly recommend install it and run it (at least once) to get files properly deployed.
 
 Also this tool came with a lot of news!.
 - Changed support for 3D converted files into glTF 2.0, file format. Since Blender 4.0+ it's moving Collada DAE Files support into Legacy. This change also help us to store easily in the same file all the Animations from a converted model.
@@ -94,7 +69,7 @@ License: GPL Affero.
 
 ## PyQt6
 
-As GUI i use PyQt6 a nice way to work on modern GUIs and hopefully get this tool working multiplatform without loosing my mind:
+As GUI TLoD Assets Converter uses PyQt6 a nice way to work on modern GUIs and hopefully get this tool working multiplatform without loosing my mind:
 
 Link: [PyQt6](https://pypi.org/project/PyQt6/)
 
@@ -125,7 +100,7 @@ If you want to use a direct "compiled-Windows-EXE-version", download the lastest
 
 #### Setup
 
-First start the tool will ask where it's located the `files` folder of Severed Chains, in here is where the TLoD Assets are deployed after Severed Chains first startup.
+First start the tool will ask where it's located the `files` folder of Severed Chains, in here is where the TLoD Assets are deployed after Severed Chains first startup.
 
 Later will ask a folder to deploy the converted files.
 
@@ -135,7 +110,7 @@ In the `CONFIG` Button you can change some options related to Window size and fo
 
 In the main window will find several buttons to do specific tasks.
 - Convert Battle Models. Pretty self-explanatory.
-- Convert SubMap Models. Convert models used in the Pre-rendered Backgrounds, not only the characters but the 3D and Textures from the Pre-rendered Background.
+- Convert SubMap Models. Convert models used in the Pre-rendered Backgrounds, not only the characters also the 3D and Textures from the Pre-rendered Background.
 - Convert WorldMap Models. Convert models used while world navigation. 
-- Textures Only. In here you'll find the Textures which have no model related to it, for example the game GUI, some text, fonts, etc.
+- Textures Only. In here you'll find the Textures which are not attached to a model, for example the game GUI, some text, fonts, etc.
 - Future Options: DEFF Conversion (convert Special Visual effects used during Magic casts, Dragoon attacks/magics, some other stuff), Sound Conversion, Mod Manager.
