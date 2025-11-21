@@ -8,6 +8,7 @@ Since I do not have a proper hardware to test it, was impossible to me making so
 You can check it in there!
 
 **Instructions for MacOS users by TheRamenRider/tvang1**
+
 I'm assuming one can download this repo and can extract the contents in an organized place.
 Or hopefully, one knows how to clone from a repo.
 If you have trouble doing that, please look at [ https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository ]
@@ -21,7 +22,7 @@ I personally use 'brew' as it's similar to Linux distro packages.
 
 Once you get Python installed. You'll have to use MacOS terminal and navigate to the TLoD Assets Converter folder.
 
-> cd <path to folder>
+> cd [ path to folder ]
 
 As far as running the program and getting dependecies, you're in luck!
 Just run the command in terminal (assuming you're in the TLoD Assets Converter folder):
