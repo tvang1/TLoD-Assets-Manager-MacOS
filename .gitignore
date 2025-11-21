@@ -1,0 +1,13 @@
+# Ignore cache files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment directories
+venv/
+env/
+
+# Ignore .DS_Store files (macOS)
+.DS_Stores
+
+# Ignore fstring_lists.txt
+fstring_lists.txt
