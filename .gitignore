@@ -11,3 +11,4 @@ env/
 
 # Ignore fstring_lists.txt
 fstring_lists.txt
+*.pyc
