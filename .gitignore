@@ -7,8 +7,14 @@ venv/
 env/
 
 # Ignore .DS_Store files (macOS)
-.DS_Stores
+.DS_Store
 
 # Ignore fstring_lists.txt
 fstring_lists.txt
-*.pyc
+
+#Ignore build and dist directories
+build/
+dist/
+
+#Ignore .icns files
+*.icns

@@ -81,28 +81,33 @@ class DatabaseHandler:
         cleaned_file_path: list = []
 
         for file_path in file_path_list:
-            clear_file_path = file_path.find('/Databases/')
-            new_path = file_path[(clear_file_path + 1):]
-            cleaned_file_path.append(new_path)
+            # Keep the full absolute path for file operations
+            cleaned_file_path.append(file_path)
 
         # First gather all the file list and split them based in the nesting inside the folders
         simple_nest_path: list[tuple] = []
         double_nest_path: list[tuple] = []
         for database_file_path in cleaned_file_path:
-            split_file_path = database_file_path.split('/')
+            # Extract relative path from Databases/ onwards for structure parsing
+            if '/Databases/' in database_file_path:
+                relative_path = database_file_path.split('/Databases/')[1]
+            else:
+                relative_path = database_file_path
+            
+            split_file_path = relative_path.split('/')
             get_parent_name: str = ''
             get_child_name: str = ''
 
-            # if length_this_path equal to 3 == Simple Nesting ; if length_this_path equal to 4 == Double Nesting
+            # if length_this_path equal to 2 == Simple Nesting ; if length_this_path equal to 3 == Double Nesting
             length_this_path = len(split_file_path)
-            if length_this_path == 3:
-                get_parent_name = split_file_path[2].replace('.csv', '')
+            if length_this_path == 2:
+                get_parent_name = split_file_path[1].replace('.csv', '')
                 this_path_data_simple = get_parent_name, database_file_path
                 simple_nest_path.append(this_path_data_simple)
 
-            elif length_this_path == 4: # This are Characters and CutScenes Databases, which also had a sligthy different format from the others CSV
-                get_parent_name = split_file_path[2]
-                get_child_name = split_file_path[3].replace('.csv', '').replace('_', ' ')
+            elif length_this_path == 3: # This are Characters and CutScenes Databases, which also had a sligthy different format from the others CSV
+                get_parent_name = split_file_path[1]
+                get_child_name = split_file_path[2].replace('.csv', '').replace('_', ' ')
                 this_path_data_double = get_parent_name, get_child_name, database_file_path
                 double_nest_path.append(this_path_data_double)
             else:

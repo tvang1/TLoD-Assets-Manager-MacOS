@@ -328,7 +328,15 @@ class MainWindow(QMainWindow):
         deff_conversion_window = DeffConversionMainWindow(self, icon=self.icon, assets_database=self.assets_database, sc_folder=sc_folder_deff, deploy_folder=deploy_folder)
 
 if __name__ == '__main__':
-    absolute_path_current = os.path.abspath(os.getcwd())
+    # This was added to support PyInstaller bundling.
+    # Get the correct base path for PyInstaller or normal Python environment
+    if getattr(sys, 'frozen', False):
+        # Running in PyInstaller bundle
+        absolute_path_current = sys._MEIPASS
+    else:
+        # Running in normal Python environment
+        absolute_path_current = os.path.abspath(os.getcwd())
+    
     absolute_path_config = f'{absolute_path_current}/Resources/Manager.config'
     absolute_path_databases = f'{absolute_path_current}/Databases'
     background_image = f'{absolute_path_current}/Resources/main.png'.replace('/', '/')
