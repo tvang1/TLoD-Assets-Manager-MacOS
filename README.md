@@ -7,7 +7,11 @@ Since I do not have a proper hardware to test it, was impossible to me making so
 [https://github.com/tvang1/TLoD-Assets-Manager-MacOS]
 You can check it in there!
 
-**Instructions for MacOS users by TheRamenRider/tvang1**
+**Instructions for Release "TLoD_Asset_Manager_MacOS_BETA_0.2.zip" by TheRamenRider/tvang1**
+
+Simply extract the contents of the zip to a desired location. You can run it by double-clicking the application named " TLoD_Asset_Manager_MacOS_BETA_0.2 ". Follow the instructions in this README where it says " ### Setup " and " ### How to use it ".
+
+**Instructions for MacOS Developer/Code-Enthusiasts by TheRamenRider/tvang1**
 
 I'm assuming one can download this repo and can extract the contents in an organized place.
 Or hopefully, one knows how to clone from a repo.

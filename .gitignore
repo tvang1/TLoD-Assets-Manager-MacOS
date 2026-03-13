@@ -5,6 +5,7 @@ __pycache__/
 # Ignore virtual environment directories
 venv/
 env/
+.venv/
 
 # Ignore .DS_Store files (macOS)
 .DS_Store
@@ -12,9 +13,14 @@ env/
 # Ignore fstring_lists.txt
 fstring_lists.txt
 
-#Ignore build and dist directories
+# Ignore PyInstaller and app build outputs
 build/
 dist/
+*.spec
+*.app/
 
-#Ignore .icns files
+# Ignore generated macOS icon files
 *.icns
+
+# Ignore Build Instructions
+BUILD_INSTRUCTIONS.md
