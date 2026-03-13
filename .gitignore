@@ -18,6 +18,8 @@ build/
 dist/
 *.spec
 *.app/
+TLoD-Assetts-Manager.app/
+TLoD-Assetts-Manager.spec
 
 # Ignore generated macOS icon files
 *.icns
