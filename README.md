@@ -9,7 +9,18 @@ You can check it in there!
 
 **Instructions for Release "TLoD_Asset_Manager_MacOS_BETA_0.2.zip" by TheRamenRider/tvang1**
 
-Simply extract the contents of the zip to a desired location. You can run it by double-clicking the application named " TLoD_Asset_Manager_MacOS_BETA_0.2 ". Follow the instructions in this README where it says " ### Setup " and " ### How to use it ".
+Simply extract the contents of the zip to a desired location.
+
+Open the application and then you'll get greeted by this message:
+
+- Apple could not verify “TLoD-Assets-ManagerMacOSBeta0.2” is free of malware that may harm your - Mac or compromise your privacy.
+
+Please click "Done". Do not move the app to the trash.
+Then go System Settings -> Privacy & Security
+Scroll down and you should see "TLoD-Assets-ManagerMacOSBeta0.2" and the option to open it anyway.
+Click on that and then select the option to "Open it Anyway".
+
+Follow the instructions in this README where it says " ### Setup " and " ### How to use it ".
 
 **Instructions for MacOS Developer/Code-Enthusiasts by TheRamenRider/tvang1**
 
