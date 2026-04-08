@@ -17,6 +17,7 @@ fstring_lists.txt
 build/
 dist/
 *.spec
+!TLoD-Assets-Manager.spec
 *.app/
 TLoD-Assetts-Manager.app/
 TLoD-Assetts-Manager.spec

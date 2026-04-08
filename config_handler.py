@@ -92,6 +92,10 @@ class ConfigurationHandler:
         :params: config_file_path [Path to Configuration File], configuration_dict [Dictionary containing the Configuration Data]\n
         write_options() -> None
         """
+        config_dir = os.path.dirname(config_file_path)
+        if config_dir:
+            os.makedirs(config_dir, exist_ok=True)
+
         with open(config_file_path, 'w') as writing_options:
             header = f'[CONFIG]\n'
             firstrun_flag = f"FIRST_RUN = {configuration_dict.get(f'First_Run')}\n"
